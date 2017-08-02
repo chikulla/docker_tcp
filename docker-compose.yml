@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  tcp_server:
+    image: tcp_server
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    volumes:
+      - ".:/work"
+    ports:
+      - "20000:20000"
+  tcp_client:
+    image: tcp_client
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    volumes:
+      - ".:/work"
+    depends_on:
+      - tcp_server
+    links:
+      - tcp_server
